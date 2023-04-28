@@ -1,1 +1,1 @@
-# Testing voting on PRs
+# Testing voting
