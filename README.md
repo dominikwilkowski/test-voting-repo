@@ -1,1 +1,1 @@
-# Testing voting
+# Voting
