@@ -13933,7 +13933,7 @@ async function main() {
 	});
 	core.info(`reviews: ${JSON.stringify(reviews, null, 2)}`);
 
-	const { data: comments } = await octokit.rest.pulls.listComments({
+	const { data: comments } = await octokit.rest.pulls.listCommentsForReview({
 		owner: gh_data.owner,
 		repo: gh_data.repo,
 		pull_number: gh_data.issue_number,
