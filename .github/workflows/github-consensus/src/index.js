@@ -34,7 +34,7 @@ async function main() {
 	});
 	core.info(`reviews: ${JSON.stringify(reviews, null, 2)}`);
 
-	const { data: comments } = await octokit.rest.pulls.listComments({
+	const { data: comments } = await octokit.rest.issues.listComments({
 		owner: gh_data.owner,
 		repo: gh_data.repo,
 		issue_number: gh_data.issue_number,
