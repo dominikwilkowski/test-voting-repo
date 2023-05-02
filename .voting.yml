@@ -1,4 +1,4 @@
 ---
 percentageToApprove: 100
-minVotersRequired: 3
+minVotersRequired: 1.125
 minVotingWindowMinutes: 5
