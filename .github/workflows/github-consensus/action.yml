@@ -2,7 +2,7 @@ name: 'Github Consensus'
 author: dominikwilkowski
 description: 'Getting consensus on a repo via voting'
 inputs:
-   token:
+  token:
     description: "GITHUB_TOKEN or a repo scoped PAT."
     default: ${{ github.token }}
   repository:
