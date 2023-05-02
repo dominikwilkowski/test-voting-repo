@@ -11,7 +11,7 @@ async function load_config() {
 
 async function main() {
 	const CONFIG = await load_config();
-	core.info(`CONFIG: ${JSON.stringify(CONFIG, null, '\n')}`);
+	core.info(`CONFIG: ${JSON.stringify(CONFIG, null, 2)}`);
 
 	const gh_data = {
 		token: core.getInput('token'),
@@ -23,7 +23,7 @@ async function main() {
 		issue_number: core.getInput('issueNumber') ? Number(core.getInput('issueNumber')) : github.context.issue.number,
 		server_url: core.getInput('serverURL'),
 	};
-	core.info(`Inputs: ${JSON.stringify(gh_data, null, '\n')}`);
+	core.info(`Inputs: ${JSON.stringify(gh_data, null, 2)}`);
 
 	const octokit = github.getOctokit(gh_data.token);
 
@@ -32,14 +32,14 @@ async function main() {
 		repo: gh_data.repo,
 		pull_number: gh_data.issue_number,
 	});
-	core.info(`reviews: ${JSON.stringify(reviews, null, '\n')}`);
+	core.info(`reviews: ${JSON.stringify(reviews, null, 2)}`);
 
 	const { data: comments } = await octokit.rest.pulls.listComments({
 		owner: gh_data.owner,
 		repo: gh_data.repo,
 		pull_number: gh_data.issue_number,
 	});
-	core.info(`comments: ${JSON.stringify(comments, null, '\n')}`);
+	core.info(`comments: ${JSON.stringify(comments, null, 2)}`);
 }
 
 try {

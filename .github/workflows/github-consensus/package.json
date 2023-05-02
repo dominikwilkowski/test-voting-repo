@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "ncc build src/index.js -o dist -m",
+		"build": "ncc build src/index.js -o dist",
 		"format": "prettier --write \"**/*.{js,json}\""
 	},
 	"keywords": [],
