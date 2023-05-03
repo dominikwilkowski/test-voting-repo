@@ -1,6 +1,6 @@
 name: 'Github Consensus'
 author: dominikwilkowski
-description: 'Getting consensus on a repo via voting'
+description: 'Getting consensus on a repo via PR reviews'
 inputs:
   token:
     description: "GITHUB_TOKEN or a repo scoped PAT."
