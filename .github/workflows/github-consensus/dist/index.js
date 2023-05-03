@@ -13908,19 +13908,24 @@ async function load_config() {
 	return data;
 }
 
-function get_body({ pr_passing, msg, uniqe_voters, FLAG, voters }) {
+function get_body({ pr_passing, msg, uniqe_voters, FLAG, voters, min_voters_required, weight_to_approve }) {
 	const votes = {
-		APPROVED: '✅',
-		CHANGES_REQUESTED: '⛔️',
+		APPROVED: ':white_check_mark:',
+		CHANGES_REQUESTED: ':stop_sign:',
 	};
-	let body = `${FLAG}\n` + `*PR Reviews SUMMARY*\n\n` + `| Name | Vote |\n` + `|--|--|\n`;
+	let body =
+		`${FLAG}\n# PR review summary\n\n` +
+		`All PRs against \`main\` have to be reviewed by the people below. ` +
+		`For a PR to be merged we need at least ${min_voters_required} of the below people to approve this PR with a combined weight of ${weight_to_approve}.\n` +
+		`You can make changes to those parameters in the [voting.yml](https://github.com/dominikwilkowski/test-voting-repo/blob/main/.voting.yml) file.` +
+		`\n\n| Name | Weight | PR Review |\n|--|--|\n`;
 
-	body += Object.entries(voters).reduce((a, [name]) => {
+	body += Object.entries(voters).reduce((a, [name, weight]) => {
 		let status = uniqe_voters[name] ? votes[uniqe_voters[name][0]] : '...';
-		return `${a}| [${name}](https://github.com/${name}/) | ${status} |\n`;
+		return `${a}| [${name}](https://github.com/${name}/) | ${weight} | ${status} |\n`;
 	}, '');
 
-	body += `\n${msg}\n`;
+	body += `\n**STATUS:** ${msg}\n`;
 
 	return body;
 }
@@ -13956,7 +13961,7 @@ async function main() {
 	const uniqe_voters = {};
 	let vote_weight = 0;
 	let pr_passing = false;
-	let msg = "This PR doesn't have enough PR reviews to pass";
+	let msg = ":stop_sign: This PR doesn't have enough PR reviews to pass";
 
 	reviews.data.forEach(({ user: { login: username }, state }) => {
 		if (Object.keys(CONFIG.voters).includes(username)) {
@@ -13974,20 +13979,29 @@ async function main() {
 	});
 
 	if (Object.keys(uniqe_voters).length < CONFIG.min_voters_required) {
-		msg = "This PR doesn't have enough PR reviews to pass";
+		msg = ":stop_sign: This PR doesn't have enough PR reviews to pass";
 	} else if (vote_weight < CONFIG.weight_to_approve) {
-		msg = "This PR doesn't have enough approvals via PR reviews";
+		msg = ":stop_sign: This PR doesn't have enough approvals via PR reviews";
 	} else if (Object.keys(uniqe_voters).length >= CONFIG.min_voters_required && vote_weight < CONFIG.weight_to_approve) {
-		msg = "This PR doesn't have enough approvals via PR reviews";
+		msg =
+			":stop_sign: This PR doesn't have enough approvals via PR reviews. It looks like enough people have voted so make sure you make the requested changes or close this PR.";
 		// perhaps we close the PR here?
 	}
 
 	if (Object.keys(uniqe_voters).length >= CONFIG.min_voters_required && vote_weight >= CONFIG.weight_to_approve) {
-		msg = 'The PR is passing PR review conditions. You are free to merge';
+		msg = ':white_check_mark: The PR is passing PR review conditions. You are free to merge';
 		pr_passing = true;
 	}
 
-	const body = get_body({ pr_passing, msg, uniqe_voters, FLAG, voters: CONFIG.voters });
+	const body = get_body({
+		pr_passing,
+		msg,
+		uniqe_voters,
+		FLAG,
+		voters: CONFIG.voters,
+		min_voters_required: CONFIG.min_voters_required,
+		weight_to_approve: CONFIG.weight_to_approve,
+	});
 
 	const { data: comments } = await octokit.rest.issues.listComments({
 		owner: gh_data.owner,

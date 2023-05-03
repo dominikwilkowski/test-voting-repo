@@ -1,13 +1,13 @@
 weight_to_approve: 2.5
-min_voters_required: 12
+min_voters_required: 10
 
 # PR reviews are being distributed to the below people
 voters:
-  # Checkout
+  # Checkout; combined weight: 1
   jffortier: 0.5
   lemonmade: 0.5
 
-  # Admin
+  # Admin; combined weight: 1
   dominikwilkowski: 0.125
   developit: 0.125
   alex-page: 0.125
@@ -17,6 +17,6 @@ voters:
   vividviolet: 0.125
   bratsos: 0.125
 
-  # POS
+  # POS; combined weight: 1
   heltisace: 0.5
   pkhanal: 0.5
