@@ -82,7 +82,7 @@ async function main() {
 		pr_passing = true;
 	}
 
-	const body = get_body({ pr_passing, msg, uniqe_voters, FLAG, voters });
+	const body = get_body({ pr_passing, msg, uniqe_voters, FLAG, voters: CONFIG.voters });
 
 	const { data: comments } = await octokit.rest.issues.listComments({
 		owner: gh_data.owner,
