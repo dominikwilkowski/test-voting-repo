@@ -13909,10 +13909,15 @@ async function load_config() {
 }
 
 function get_body({ pr_passing, msg, uniqe_voters, FLAG, voters }) {
+	const votes = {
+		APPROVED: '✅',
+		CHANGES_REQUESTED: '⛔️',
+	};
 	let body = `${FLAG}\n` + `*PR Reviews SUMMARY*\n\n` + `| Name | Vote |\n` + `|--|--|\n`;
 
 	body += Object.entries(voters).reduce((a, [name]) => {
-		`| ${name} | ${uniqe_voters[name][0]} |\n`;
+		let status = uniqe_voters[name] ? votes[uniqe_voters[name][0]] : '...';
+		return `| ${name} | ${uniqe_voters[name][0]} |\n`;
 	}, '');
 
 	body += `\n${msg}\n`;
