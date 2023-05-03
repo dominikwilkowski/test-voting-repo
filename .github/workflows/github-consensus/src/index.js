@@ -18,7 +18,7 @@ function get_body({ pr_passing, msg, uniqe_voters, FLAG, voters }) {
 
 	body += Object.entries(voters).reduce((a, [name]) => {
 		let status = uniqe_voters[name] ? votes[uniqe_voters[name][0]] : '...';
-		return `| ${name} | ${status} |\n`;
+		return `${a}| [${name}](https://github.com/${name}/) | ${status} |\n`;
 	}, '');
 
 	body += `\n${msg}\n`;
