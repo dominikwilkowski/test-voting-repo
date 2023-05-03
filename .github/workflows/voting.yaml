@@ -1,11 +1,10 @@
-name: 'Voting'
-on:
-  pull_request_target:
+name: 'PR review'
+on: pull_request_review
 
 jobs:
-  democracy:
+  git-consensus:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Evaluate vote
-        uses: myyk/git-democracy@v1
+        uses: ./.github/workflows/github-consensus/
