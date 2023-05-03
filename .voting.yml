@@ -1,4 +1,4 @@
-percentage_to_approve: 100
+weight_to_approve: 2.5
 min_voters_required: 12
 
 # PR reviews are being distributed to the below people
