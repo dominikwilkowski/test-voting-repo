@@ -13960,6 +13960,7 @@ async function main() {
 			}
 		}
 	});
+	core.info(`uniqe_voters: ${JSON.stringify(uniqe_voters, null, 2)}`);
 
 	Object.entries(([_, [state, weight]]) => {
 		if (state === 'APPROVED') {
