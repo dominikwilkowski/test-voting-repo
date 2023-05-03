@@ -19,7 +19,7 @@ function get_body({ pr_passing, msg, uniqe_voters, FLAG, voters, min_voters_requ
 		`All PRs against \`main\` have to be reviewed by the people below. ` +
 		`For a PR to be merged we need at least ${min_voters_required} of the below people to approve this PR with a combined weight of ${weight_to_approve}.\n` +
 		`You can make changes to those parameters in the [voting.yml](https://github.com/dominikwilkowski/test-voting-repo/blob/main/.voting.yml) file.` +
-		`\n\n| Name | Weight | PR Review |\n|--|--|\n`;
+		`\n\n| Name | Weight | PR Review |\n|--|--|--|\n`;
 
 	body += Object.entries(voters).reduce((a, [name, weight]) => {
 		let status = uniqe_voters[name] ? votes[uniqe_voters[name][0]] : '...';
